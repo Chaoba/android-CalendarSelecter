@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="calendar_title_split">#e7e7ea</color>
+    <color name="calendar_title_background">#f8f8f8</color>
+    <color name="calendar_title_title_color">#585858</color>
+
+</resources>

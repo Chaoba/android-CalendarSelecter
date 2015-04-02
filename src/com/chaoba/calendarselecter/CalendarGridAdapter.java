@@ -7,6 +7,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chaoba.utils.Logger;
@@ -21,11 +22,20 @@ public class CalendarGridAdapter extends BaseAdapter {
 	private final static int DAYS_OF_CURRENT_MONTH = 2;
 	private int mYear;
 	private int mMonth;
+	private boolean mshowOtherMonth;
+	private int mSelectedPosition;
 
-	public CalendarGridAdapter(Context c, int year, int month) {
+	public void setCheckedPosition(int checkedPosition) {
+		mSelectedPosition = checkedPosition;
+		notifyDataSetChanged();
+	}
+
+	public CalendarGridAdapter(Context c, int year, int month,
+			boolean showOtherMonth) {
 		mContext = c;
 		mYear = year;
 		mMonth = month;
+		mshowOtherMonth = showOtherMonth;
 		mCalendar = Calendar.getInstance();
 		mCalendar.set(Calendar.YEAR, year);
 		mCalendar.set(Calendar.MONTH, month - 1);
@@ -67,6 +77,7 @@ public class CalendarGridAdapter extends BaseAdapter {
 				nextMonth.add(Calendar.DAY_OF_MONTH, 1);
 			}
 		}
+
 	}
 
 	private int getDaySpacing(int dayOfWeek) {
@@ -110,10 +121,16 @@ public class CalendarGridAdapter extends BaseAdapter {
 			dateString = mYear + "-" + mMonth + "-" + getItem(position);
 			break;
 		case DAYS_OF_NEXT_MONTHS:
-			dateString = mYear + "-" + (mMonth+1) + "-" + getItem(position);
+			if (mshowOtherMonth) {
+				dateString = mYear + "-" + (mMonth + 1) + "-"
+						+ getItem(position);
+			}
 			break;
 		case DAYS_OF_LAST_MONTHS:
-			dateString = mYear + "-" + (mMonth-1) + "-" + getItem(position);
+			if (mshowOtherMonth) {
+				dateString = mYear + "-" + (mMonth - 1) + "-"
+						+ getItem(position);
+			}
 			break;
 		}
 		return dateString;
@@ -121,22 +138,58 @@ public class CalendarGridAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		convertView = View.inflate(mContext, R.layout.grid_item, null);
-		TextView t = (TextView) convertView.findViewById(R.id.grid_item_text);
+		ViewHolder holder = null;
+		if (convertView == null) {
+			holder = new ViewHolder();
+			convertView = View.inflate(mContext, R.layout.grid_item, null);
+			holder.textView = (TextView) convertView
+					.findViewById(R.id.grid_item_text);
+			holder.img = (ImageView) convertView
+					.findViewById(R.id.grid_item_background);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
 		switch (getItemViewType(position)) {
 		case DAYS_OF_CURRENT_MONTH:
-			t.setText(String.valueOf(getItem(position)));
-			t.setTextAppearance(mContext, R.style.DayOfCurrentMonthStyle);
+			holder.textView.setText(String.valueOf(getItem(position)));
+			holder.textView.setTextAppearance(mContext,
+					R.style.DayOfCurrentMonthStyle);
+			if (mSelectedPosition == position) {
+				holder.img.setVisibility(View.VISIBLE);
+				holder.textView.setTextColor(mContext.getResources().getColor(
+						android.R.color.white));
+			} else {
+				holder.img.setVisibility(View.GONE);
+			}
 			break;
 		case DAYS_OF_NEXT_MONTHS:
 		case DAYS_OF_LAST_MONTHS:
-			t.setText(String.valueOf(getItem(position)));
-			t.setTextAppearance(mContext, R.style.DayOfOtherMonthsStyle);
+			holder.textView.setTextAppearance(mContext,
+					R.style.DayOfOtherMonthsStyle);
+			if (mshowOtherMonth) {
+				holder.textView.setText(String.valueOf(getItem(position)));
+				if (mSelectedPosition == position) {
+					holder.img.setVisibility(View.VISIBLE);
+					holder.textView.setTextColor(mContext.getResources()
+							.getColor(android.R.color.white));
+				} else {
+					holder.img.setVisibility(View.GONE);
+				}
+			} else {
+				holder.textView.setText("");
+				holder.img.setVisibility(View.GONE);
+			}
 			break;
 		default:
 			break;
 		}
+
 		return convertView;
 	}
 
+	class ViewHolder {
+		TextView textView;
+		ImageView img;
+	}
 }

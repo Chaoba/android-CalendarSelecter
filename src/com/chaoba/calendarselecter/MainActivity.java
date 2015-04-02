@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		RelativeLayout body=(RelativeLayout) findViewById(R.id.body);
 		CalendarSelecterView view=new CalendarSelecterView(MainActivity.this);
-		view.setTime(2015, 3);
+		view.setTime(2015, 4,false);
 		body.addView(view);
 	}
 
