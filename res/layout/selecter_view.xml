@@ -7,32 +7,35 @@
     <RelativeLayout
         android:id="@+id/title_month_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/current_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@color/calendar_title_title_color"
-            android:text="2015-02" />
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="2015-02"
+            android:textColor="@color/calendar_title_text_color" />
 
         <ImageButton
             android:id="@+id/last_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/aw_left"
-            android:visibility="gone" />
+            android:scaleType="fitXY" />
 
         <ImageButton
             android:id="@+id/next_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/aw_right"
+            android:scaleType="fitXY"
             android:visibility="gone" />
     </RelativeLayout>
 
@@ -52,8 +55,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/day_of_week"
+        android:background="@color/listview_split"
         android:gravity="center"
-        android:numColumns="7" >
+        android:numColumns="7"
+        android:verticalSpacing="1.0px" >
     </GridView>
 
 </RelativeLayout>

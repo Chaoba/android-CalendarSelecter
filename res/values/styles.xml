@@ -26,7 +26,7 @@
 
     <style name="DayOfCurrentMonthStyle">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/calendar_month_text_color</item>
         <item name="android:gravity">center</item>
     </style>
 
