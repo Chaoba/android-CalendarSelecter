@@ -50,15 +50,15 @@
         android:numColumns="7" >
     </GridView>
 
-    <GridView
+    <com.chaoba.calendarselecter.CalendarGridView
         android:id="@+id/day_of_month"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/day_of_week"
         android:background="@color/listview_split"
         android:gravity="center"
         android:numColumns="7"
         android:verticalSpacing="1.0px" >
-    </GridView>
+    </com.chaoba.calendarselecter.CalendarGridView>
 
 </RelativeLayout>

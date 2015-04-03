@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.chaoba.utils.Logger;
-
+/**
+ * Adapter that show days in one month
+ * @author Liyanshun
+ *
+ */
 public class CalendarGridAdapter extends BaseAdapter {
 	private Calendar mCalendar;
 	private ArrayList<Integer> mDaysArrayList = new ArrayList<Integer>();
@@ -23,7 +26,6 @@ public class CalendarGridAdapter extends BaseAdapter {
 	private int mMonth;
 	private boolean mshowOtherMonth;
 	private int mSelectedPosition = -1;
-	long start, end;
 
 	public void setCheckedPosition(int checkedPosition) {
 		switch (getItemViewType(checkedPosition)) {
@@ -42,7 +44,7 @@ public class CalendarGridAdapter extends BaseAdapter {
 	}
 
 	public void setTime(int year, int month, boolean showOtherMonth) {
-		start = System.nanoTime();
+		mSelectedPosition = -1;
 		mDaysArrayList.clear();
 		mDaysTypeList.clear();
 		mYear = year;
@@ -87,8 +89,6 @@ public class CalendarGridAdapter extends BaseAdapter {
 			}
 		}
 		notifyDataSetChanged();
-		end = System.nanoTime();
-		Logger.i("time:" + (end - start) / 1000);
 
 	}
 
@@ -149,12 +149,6 @@ public class CalendarGridAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if (position == 0) {
-			start = System.nanoTime();
-		} else if (position == mDaysArrayList.size() - 1) {
-			end = System.nanoTime();
-			Logger.i("get view time:" + (end - start) / 1000);
-		}
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();

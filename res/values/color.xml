@@ -5,4 +5,7 @@
     <color name="calendar_title_background">#f8f8f8</color>
     <color name="calendar_title_text_color">#585858</color>
  	<color name="calendar_month_text_color">#939393</color>
+ 	<color name="listview_split">#dee0e8</color>
+ 	<color name="background_color">#ecf4fc</color>
+ 	
 </resources>

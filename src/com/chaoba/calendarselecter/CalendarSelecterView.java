@@ -2,6 +2,7 @@ package com.chaoba.calendarselecter;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -15,8 +16,6 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.chaoba.utils.Logger;
 
 /**
  * A view that let users select date
@@ -59,8 +58,10 @@ public class CalendarSelecterView extends RelativeLayout implements
 				R.layout.selecter_view, null, false);
 		mCrrentMonthTextView = (TextView) mBodyLayout
 				.findViewById(R.id.current_month);
-		mLastMonthButton = (ImageButton) mBodyLayout.findViewById(R.id.last_month);
-		mNextMonthButton = (ImageButton) mBodyLayout.findViewById(R.id.next_month);
+		mLastMonthButton = (ImageButton) mBodyLayout
+				.findViewById(R.id.last_month);
+		mNextMonthButton = (ImageButton) mBodyLayout
+				.findViewById(R.id.next_month);
 		mDayOfWeekView = (GridView) mBodyLayout.findViewById(R.id.day_of_week);
 		mLastMonthButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -84,7 +85,8 @@ public class CalendarSelecterView extends RelativeLayout implements
 		DayOfWeekAdapter dayOfWeekAdapter = new DayOfWeekAdapter();
 		mDayOfWeekView.setAdapter(dayOfWeekAdapter);
 
-		mDayOfMonthGridView = (GridView) mBodyLayout.findViewById(R.id.day_of_month);
+		mDayOfMonthGridView = (CalendarGridView) mBodyLayout
+				.findViewById(R.id.day_of_month);
 		mDayOfMonthAdapter = new CalendarGridAdapter(getContext());
 		mDayOfMonthGridView.setAdapter(mDayOfMonthAdapter);
 		mDayOfMonthGridView.setOnItemClickListener(this);
@@ -177,7 +179,6 @@ public class CalendarSelecterView extends RelativeLayout implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		mDayOfMonthAdapter.setCheckedPosition(position);
-		Logger.i("selected:" + mDayOfMonthAdapter.getSelectedDate(position));
 		if (mOnDateSelectedListener != null) {
 			mOnDateSelectedListener.OnDateSelected(mDayOfMonthAdapter
 					.getSelectedDate(position));
